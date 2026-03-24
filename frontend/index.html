@@ -74,6 +74,9 @@
                             </svg>
                         </button>
                     </div>
+                    <footer class="chat-footer">
+                        <p>Arturo Andrade Hernadez <span id="footerYear"></span></p>
+                    </footer>
                 </div>
             </main>
         </div>
@@ -82,5 +85,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="script.js?v=9"></script>
+    <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
 </body>
 </html>
