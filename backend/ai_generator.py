@@ -86,7 +86,9 @@ Provide only the direct answer to what was asked.
             return self._handle_tool_execution(response, api_params, tool_manager)
         
         # Return direct response
-        return response.content[0].text
+        if response.content and hasattr(response.content[0], 'text'):
+            return response.content[0].text
+        return "I was unable to generate a response."
     
     def _handle_tool_execution(self, initial_response, base_params: Dict[str, Any], tool_manager):
         """
@@ -110,10 +112,13 @@ Provide only the direct answer to what was asked.
         tool_results = []
         for content_block in initial_response.content:
             if content_block.type == "tool_use":
-                tool_result = tool_manager.execute_tool(
-                    content_block.name, 
-                    **content_block.input
-                )
+                try:
+                    tool_result = tool_manager.execute_tool(
+                        content_block.name,
+                        **content_block.input
+                    )
+                except Exception as e:
+                    tool_result = f"Tool execution error: {str(e)}"
                 
                 tool_results.append({
                     "type": "tool_result",
@@ -134,4 +139,6 @@ Provide only the direct answer to what was asked.
         
         # Get final response
         final_response = self.client.messages.create(**final_params)
-        return final_response.content[0].text
+        if final_response.content and hasattr(final_response.content[0], 'text'):
+            return final_response.content[0].text
+        return "I was unable to generate a response."
