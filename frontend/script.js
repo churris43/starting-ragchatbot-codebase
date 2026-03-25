@@ -182,7 +182,7 @@ async function createNewSession() {
   currentSessionId = null;
   chatMessages.innerHTML = '';
   addMessage(
-    'Welllcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?',
+    'Welcom to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?',
     'assistant',
     null,
     true
